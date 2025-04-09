@@ -1,0 +1,12 @@
+{
+  "name": "getting-started-app",
+  "version": "1.0.0",
+  "description": "A simple Node.js app to test GitHub Actions CI/CD",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "keywords": [],
+  "author": "Saimukesh4490",
+  "license": "ISC"
+}
