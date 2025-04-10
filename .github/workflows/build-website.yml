@@ -1,0 +1,33 @@
+name: Build and Deploy Hugo Website
+
+on:
+  push:
+    branches:
+      - '**'   # Trigger on push to any branch
+
+jobs:
+  build:
+    name: Build Website
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Hugo
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: 'latest'
+
+      # Step 3: Build the website using Hugo
+      - name: Build the website
+        run: hugo
+
+      # Step 4 (Optional): Deploy the website to GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
