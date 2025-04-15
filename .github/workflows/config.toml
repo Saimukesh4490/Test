@@ -1,4 +1,0 @@
-baseURL = "http://example.org/"
-languageCode = "en-us"
-title = "My Hugo Site"
-theme = "my-theme"  # Replace with your theme name (ensure the theme exists in the `themes/` directory)
