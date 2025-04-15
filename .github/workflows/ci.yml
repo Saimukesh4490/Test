@@ -1,56 +1,28 @@
-name: Build and Deploy Hugo Site
+name: Build and Deploy
 
 on:
   push:
     branches:
-      - '**'  # Trigger on push to any branch
+      - main  # Triggers on push to the main branch
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    
-    steps:
-    # Step 1: Checkout the repository
-    - name: Checkout code
-      uses: actions/checkout@v3
-
-    # Step 2: Set up Hugo
-    - name: Setup Hugo
-      uses: peaceiris/actions-hugo@v2
-      with:
-        hugo-version: 'latest'  # Specify Hugo version (e.g., '0.115.0' or 'latest')
-
-    # Step 3: Build the site
-    - name: Build site
-      run: hugo --minify  # Run Hugo to build the site
-
-    # Step 4 (Optional): Upload the build as an artifact
-    - name: Upload artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: hugo-site
-        path: ./public  # Hugo's default output directory
-
   deploy:
-    # Only run deployment on the default branch (e.g., "main" or "master")
-    if: github.ref == 'refs/heads/main'
-    needs: build
     runs-on: ubuntu-latest
 
     steps:
-    # Step 1: Checkout the repository
-    - name: Checkout code
+    - name: Checkout repository
       uses: actions/checkout@v3
 
-    # Step 2: Setup Hugo (needed to generate deployment-ready output)
-    - name: Setup Hugo
+    - name: Set up Hugo
       uses: peaceiris/actions-hugo@v2
       with:
         hugo-version: 'latest'
 
-    # Step 3: Deploy to GitHub Pages
+    - name: Build site
+      run: hugo --minify
+
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./public  # Hugo's default output directory
+        publish_dir: ./public
